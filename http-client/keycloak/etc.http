@@ -1,0 +1,5 @@
+### OpenID Endpoint Configuration
+GET {{base_url}}/realms/client-user/.well-known/openid-configuration
+
+### get public key
+GET {{base_url}}/realms/client-user/protocol/openid-connect/certs

@@ -1,0 +1,30 @@
+### 1. client login
+POST {{base_url}}/realms/client-user/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+client_id = gateway-service &
+grant_type = client_credentials &
+client_secret = ojf8nAwtwMAB0QNd1yjh9sjSg4zNgxfZ
+
+### 2. user register
+POST {{base_url}}/admin/realms/client-user/users
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJLQW9HM0pSSGV5VlRjbW9xeW9zbWF6VkJBaFhCejNKVHN4LW03U0tRU3FvIn0.eyJleHAiOjE3MzcyOTg5MDQsImlhdCI6MTczNzI5ODYwNCwianRpIjoiMjQzZDM2N2QtYzg2My00ZGJmLThmYTYtMzIzZmZiMzRlZDA4IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDoxODA4MC9yZWFsbXMvY2xpZW50LXVzZXIiLCJhdWQiOlsicmVhbG0tbWFuYWdlbWVudCIsImFjY291bnQiXSwic3ViIjoiYWVhNDZhZTgtOTgyZC00Mzk5LTk2ZjYtOTE2YjNjNmY1YTZiIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiZ2F0ZXdheS1zZXJ2aWNlIiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyIvKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiZGVmYXVsdC1yb2xlcy1jbGllbnQtdXNlciIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJyZWFsbS1tYW5hZ2VtZW50Ijp7InJvbGVzIjpbIm1hbmFnZS11c2VycyJdfSwiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJwcm9maWxlIGVtYWlsIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJjbGllbnRIb3N0IjoiMTcyLjE4LjAuMSIsInByZWZlcnJlZF91c2VybmFtZSI6InNlcnZpY2UtYWNjb3VudC1nYXRld2F5LXNlcnZpY2UiLCJjbGllbnRBZGRyZXNzIjoiMTcyLjE4LjAuMSIsImNsaWVudF9pZCI6ImdhdGV3YXktc2VydmljZSJ9.1yRAHdCnTcsu4X4piSjLsQcEWH4Y1l7wJ85Owa4B8heddYFiatYDEB87wYP2PiEVvVETBJXEfMYx5w_IACyHGBTbQGJABLpNAn9j87Ku5PcfPeEbwn-ui6M93cjTFUV8BulawQvtwpYIG0wmP7whDmoYalqWpnR8-cBHcLrEWsyBexPby9u2e5F6vDH1a3ez65cnDISbuQ4S8U4tYNsV2GMi0H8cOJACrpoZ9WDPq7TfNeKV34dvfbhwXLOB5MZx1B5yF3NaHvJl9yZIk26DlFHfulu-Ie2cQ7fIAf8l1z1FLBa0-zioChgitiRQKAMuQSFeSnYdb0MVJaQBU8v9Qg
+Content-Type: application/json
+
+{
+  "email": "test1@example.com",
+  "enabled": true,
+  "emailVerified": true,
+  "attributes": {
+    "name": [
+      "Test User"
+    ]
+  },
+  "credentials": [
+    {
+      "type": "password",
+      "value": "password",
+      "temporary": false
+    }
+  ]
+}
