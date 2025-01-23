@@ -1,7 +1,7 @@
 version: '3.7'
 
 services:
-  postgres:
+  keycloak_postgres:
     image: postgres:15.8
     volumes:
       - keycloak_postgres_data:/var/lib/postgresql/data
@@ -13,11 +13,11 @@ services:
       - "15432:5432"
     networks:
       - keycloak_network
-#    deploy:
-#      resources:
-#        limits:
-#          cpus: '1.0'
-#          memory: 1G
+  #    deploy:
+  #      resources:
+  #        limits:
+  #          cpus: '1.0'
+  #          memory: 1G
 
   keycloak:
     image: quay.io/keycloak/keycloak:26.0.7
@@ -28,18 +28,17 @@ services:
       KC_HOSTNAME_STRICT_BACKCHANNEL: false
       KC_HTTP_ENABLED: true
       KC_HOSTNAME_STRICT_HTTPS: false
-      KC_HEALTH_ENABLED: true
       KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN}
       KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
       KC_DB: postgres
-      KC_DB_URL: jdbc:postgresql://postgres/${POSTGRES_DB}
+      KC_DB_URL: jdbc:postgresql://keycloak_postgres/${POSTGRES_DB}
       KC_DB_USERNAME: ${POSTGRES_USER}
       KC_DB_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - "18080:8080"
     restart: always
     depends_on:
-      - postgres
+      - keycloak_postgres
     networks:
       - keycloak_network
 #    deploy:
