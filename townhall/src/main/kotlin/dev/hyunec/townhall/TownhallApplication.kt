@@ -1,11 +1,11 @@
-package dev.hyunec.clientapi
+package dev.hyunec.townhall
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class ClientApiApplication
+class TownhallApplication
 
 fun main(args: Array<String>) {
-    runApplication<ClientApiApplication>(*args)
+    runApplication<TownhallApplication>(*args)
 }
