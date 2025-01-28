@@ -1,0 +1,35 @@
+### 1. client login
+POST {{base_url}}/realms/client-user/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+grant_type = client_credentials &
+client_id = {{client_id}} &
+client_secret = {{client_secret}}
+
+> {%
+    client.global.set("access_token", response.body["access_token"])
+    client.log("access_token=" + client.global.get("access_token"))
+%}
+
+### 2. user register
+POST {{base_url}}/admin/realms/client-user/users
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+  "email": "test1@example.com",
+  "enabled": true,
+  "emailVerified": true,
+  "attributes": {
+    "name": [
+      "Test User"
+    ]
+  },
+  "credentials": [
+    {
+      "type": "password",
+      "value": "password",
+      "temporary": false
+    }
+  ]
+}

@@ -42,9 +42,9 @@ $ docker-compose up -d
 
 > /http-client/keycloak
 
-- [x] user_register.http
-- [x] user_login.http
-- [ ] user_password_reset.http
-- [ ] user_verify_by_public_key.http
-- [ ] user_verify_by_email.http
-- [ ] user_convert_access_token_from_refresh_token.http
+- [x] 01_user_register.http
+- [x] 02_user_login.http
+- [ ] 03_user_pwd_reset.http
+- [ ] 04_user_verify_by_public_key.http
+- [ ] 05_user_verify_by_email.http
+- [ ] 06_user_convert_access_token_from_refresh_token.http
