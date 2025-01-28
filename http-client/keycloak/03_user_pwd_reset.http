@@ -1,0 +1,65 @@
+### 1. client login
+POST {{base_url}}/realms/client-user/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+grant_type = client_credentials &
+client_id = {{client_id}} &
+client_secret = {{client_secret}}
+
+> {%
+    client.global.set("access_token", response.body["access_token"])
+    client.log("access_token=" + client.global.get("access_token"))
+%}
+
+### 2. user register
+POST {{base_url}}/admin/realms/client-user/users
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+  "email": "user_pwd_reset@example.com",
+  "enabled": true,
+  "emailVerified": true,
+  "attributes": {
+    "name": [
+      "Test User"
+    ]
+  },
+  "credentials": [
+    {
+      "type": "password",
+      "value": "password",
+      "temporary": false
+    }
+  ]
+}
+
+### 3. get user id
+GET {{base_url}}/admin/realms/client-user/users?email=user_pwd_reset@example.com
+Authorization: Bearer {{access_token}}
+
+> {%
+    client.global.set("user_id", response.body[0]["id"])
+    client.log("user_id=" + client.global.get("user_id"))
+%}
+
+### 3. user pwd reset
+PUT {{base_url}}/admin/realms/client-user/users/{{user_id}}/reset-password
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+  "temporary": false,
+  "type": "password",
+  "value": "new_password"
+}
+
+### 4. user login
+POST {{base_url}}/realms/client-user/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+username = user_pwd_reset@example.com &
+password = new_password &
+grant_type = password &
+client_id = {{client_id}} &
+client_secret = {{client_secret}}
