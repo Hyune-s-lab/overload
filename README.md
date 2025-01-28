@@ -45,6 +45,6 @@ $ docker-compose up -d
 - [x] 01_user_register.http
 - [x] 02_user_login.http
 - [x] 03_user_pwd_reset.http
-- [ ] 04_user_verify_by_public_key.http
+- [x] 04_access_key_verify_by_public_key.http
 - [ ] 05_user_verify_by_email.http
 - [ ] 06_user_convert_access_token_from_refresh_token.http
