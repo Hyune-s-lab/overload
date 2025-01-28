@@ -47,3 +47,18 @@ $ docker-compose up -d
 - [x] 03_user_pwd_reset.http
 - [x] 04_access_key_verify_by_public_key.http
 - [x] 05_access_token_from_refresh_token.http
+
+## phase 2
+
+### keycloak 사전 준비
+
+1. `client-user` realm 선택
+2. townhall 에서 사용할 client 생성
+   - Clients > Create
+      - Client ID: `townhall`
+      - Client authentication: ON
+      - Authentication Flow Overrides: Standard flow, Direct access grants, Service account roles
+3. logging enabled
+   - Realm Settings > Events > User events settings
+      - Save events: ON
+      - Expire events: 30 days
