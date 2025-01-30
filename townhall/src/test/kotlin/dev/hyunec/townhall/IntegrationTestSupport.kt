@@ -10,6 +10,7 @@ import org.junit.jupiter.api.TestInstance.Lifecycle
 import org.junit.jupiter.api.TestMethodOrder
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.http.MediaType
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.TestConstructor
 import org.springframework.test.context.TestConstructor.AutowireMode
@@ -25,6 +26,7 @@ abstract class IntegrationTestSupport {
     @Autowired
     protected lateinit var keycloakConfigProperties: KeycloakConfigProperties
     protected lateinit var webTestClient: WebTestClient
+    protected lateinit var loginWebTestClient: WebTestClient.RequestBodySpec
 
     protected val log = KotlinLogging.logger {}
 
@@ -39,6 +41,10 @@ abstract class IntegrationTestSupport {
         webTestClient = WebTestClient.bindToServer()
             .baseUrl(keycloakConfigProperties.serverUrl)
             .build()
+
+        loginWebTestClient = webTestClient.post()
+            .uri("/realms/${keycloakConfigProperties.realm}/protocol/openid-connect/token")
+            .contentType(MediaType.APPLICATION_FORM_URLENCODED)
     }
 
     data class Client(
