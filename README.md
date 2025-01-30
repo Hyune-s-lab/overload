@@ -50,15 +50,26 @@ $ docker-compose up -d
 
 ## phase 2
 
+![img.png](img/img_phase2.png)
+
+- keycloak-admin-client sdk 로 개발
+- townhall 은 admin client 의 역할을 하고, gateway-service 는 user client 의 역할을 합니다.
+
 ### keycloak 사전 준비
 
 1. `client-user` realm 선택
 2. townhall 에서 사용할 client 생성
-   - Clients > Create
-      - Client ID: `townhall`
-      - Client authentication: ON
-      - Authentication Flow Overrides: Standard flow, Direct access grants, Service account roles
+    - Clients > Create
+        - Client ID: `townhall`
+        - Client authentication: ON
+        - Authentication Flow Overrides: Standard flow, Direct access grants, Service account roles
+    - `gateway-service` client 에서 Service account roles 제거
 3. logging enabled
-   - Realm Settings > Events > User events settings
-      - Save events: ON
-      - Expire events: 30 days
+    - Realm Settings > Events > User events settings
+        - Save events: ON
+        - Expire events: 30 days
+
+### 구현
+
+- [x] 회원가입 `POST /api/v1/client-user/users`
+- [x] 비밀번호 변경 `PUT /api/v1/client-user/users/{userId}/password`
