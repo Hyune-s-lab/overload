@@ -1,0 +1,11 @@
+### user register
+POST {{base_url}}/api/v1/client-user/users
+Content-Type: application/json
+
+{
+  "email": "test1@example.com",
+  "password": "password",
+  "name": "Test User123",
+  "isEnabled": true,
+  "isEmailVerified": true
+}
