@@ -1,0 +1,7 @@
+spring.config.activate.on-profile: integration
+
+keycloak:
+  server-url: http://localhost:18080
+  realm: client-user
+  client-id: townhall
+  client-secret: TqY0UUnmtV71Q4fIgLO8wwMg4IBUPJbs
