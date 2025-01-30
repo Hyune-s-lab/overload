@@ -40,6 +40,56 @@ class ClientUserServiceIT(
             .jsonPath("$.access_token").isNotEmpty
     }
 
+    @Test
+    fun `usecase2) 회원 가입, service client 로 회원 로그인, 비밀번호 변경, 로그인(변경 전 비밀번호), 로그인(변경 후 비밀번호`() {
+        val testUser = user()
+
+        // 1. 회원 가입
+        clientUserService.register(testUser)
+
+        // 2. service client 로 회원 로그인
+        val loginBody = testUser.run {
+            loginBody(username = email, password = credentials.first().value)
+        }
+
+        loginWebTestClient
+            .body(loginBody)
+            .exchange()
+            .expectStatus().isOk
+            .expectBody()
+            .consumeWith { response ->
+                val responseBody = response.responseBody?.toString(Charsets.UTF_8) ?: "No Response Body"
+                log.info { "Exchange Response:\n$responseBody" }
+            }
+            .jsonPath("$.access_token").isNotEmpty
+
+        // 3. 비밀번호 변경
+        val newPassword = "newPassword"
+        clientUserService.changePassword(testUser.email, newPassword)
+
+        // 4. service client 로 회원 로그인 (변경 전 비밀번호)
+        loginWebTestClient
+            .body(loginBody)
+            .exchange()
+            .expectStatus().isUnauthorized
+
+        // 5. service client 로 회원 로그인 (변경 후 비밀번호)
+        val loginBodyAfterChangePassword = testUser.run {
+            loginBody(username = email, password = newPassword)
+        }
+
+        loginWebTestClient
+            .body(loginBodyAfterChangePassword)
+            .exchange()
+            .expectStatus().isOk
+            .expectBody()
+            .consumeWith { response ->
+                val responseBody = response.responseBody?.toString(Charsets.UTF_8) ?: "No Response Body"
+                log.info { "Exchange Response:\n$responseBody" }
+            }
+            .jsonPath("$.access_token").isNotEmpty
+    }
+
     private fun loginBody(
         username: String,
         password: String,

@@ -3,6 +3,7 @@ package dev.hyunec.townhall.clientuser.domain
 import dev.hyunec.townhall.clientuser.exception.ClientUserException
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.keycloak.admin.client.resource.RealmResource
+import org.keycloak.representations.idm.CredentialRepresentation
 import org.keycloak.representations.idm.UserRepresentation
 import org.springframework.stereotype.Service
 
@@ -29,5 +30,16 @@ class ClientUserService(
     fun findByEmail(email: String): UserRepresentation {
         return realmResource.users().searchByEmail(email, true)[0]
             ?: throw ClientUserException.UnexpectedException("User not found: $email")
+    }
+
+    fun changePassword(email: String, newPassword: String) {
+        realmResource.users()
+            .get(findByEmail(email).id)
+            .resetPassword(
+                CredentialRepresentation().apply {
+                    this.type = CredentialRepresentation.PASSWORD
+                    this.value = newPassword
+                    this.isTemporary = false
+                })
     }
 }
