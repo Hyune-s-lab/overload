@@ -78,3 +78,7 @@ $ docker-compose up -d
 
 - 프로젝트명 overload-admin 로 변경
     - 사내에서 사용하기 위한 testbed 용도이기에 이름을 변경합니다.
+
+### keycloak 변경
+
+1. client_id 변경 `townhall` -> `overload-admin`
