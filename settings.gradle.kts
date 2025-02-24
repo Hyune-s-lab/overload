@@ -1,5 +1,5 @@
-rootProject.name = "townhall"
+rootProject.name = "overload"
 
 include(
-    "townhall",
+    "core:overload-admin",
 )

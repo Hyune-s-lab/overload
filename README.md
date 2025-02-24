@@ -1,4 +1,4 @@
-# townhall
+# overload ~~townhall~~
 
 ## background
 
@@ -73,3 +73,8 @@ $ docker-compose up -d
 
 - [x] 회원가입 `POST /api/v1/client-user/users`
 - [x] 비밀번호 변경 `PUT /api/v1/client-user/users/{userId}/password`
+
+## phase 2.5
+
+- 프로젝트명 overload-admin 로 변경
+    - 사내에서 사용하기 위한 testbed 용도이기에 이름을 변경합니다.
