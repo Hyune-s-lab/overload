@@ -79,6 +79,47 @@ $ docker-compose up -d
 - 프로젝트명 overload-admin 로 변경
     - 사내에서 사용하기 위한 testbed 용도이기에 이름을 변경합니다.
 
-### keycloak 변경
+## phase 3
 
-1. client_id 변경 `townhall` -> `overload-admin`
+![img.png](img/img_phase3.png)
+
+- team 정보를 user profile 에서 관리하기
+
+### user attributes 에 team 정보 추가
+
+1. user attributes 세팅
+    - Realm Settings > User profile
+        - attributes 추가: team
+        - Enabled when: Scopes are requested
+2. client scope 추가
+    - Client scopes > Create client scope
+        - Name: team
+        - Type: Optional
+        - Include in token scope: ON
+    - save 후 Mappers 선택
+        - Configure a new mapper > User Attribute
+            - Name: team
+            - User Attribute: team
+            - Token Client Name: team
+            - Claim Json Type: JSON
+3. client 에 scope 적용
+    - Clients > `gateway-service` 선택
+    - Client scopes > Add client scope
+        - Optional 로 Add
+
+### team 정보가 포함된 token 생성
+
+- team 은 Optional 이기에 기본적으로 노출되지 않습니다.
+- scope 를 명시하면 노출 됩니다.
+
+```http request
+POST {{base_url}}/realms/client-user/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+username = dan@sionic.ai &
+password = password &
+grant_type = password &
+client_id = {{client_id}} &
+client_secret = {{client_secret}} &
+scope = team
+```

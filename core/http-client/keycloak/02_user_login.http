@@ -8,7 +8,6 @@ grant_type = password &
 client_id = {{client_id}} &
 client_secret = {{client_secret}}
 
-
 > {%
     client.global.set("access_token", response.body["access_token"])
     client.log("access_token=" + client.global.get("access_token"))
@@ -21,3 +20,19 @@ Content-Type: application/x-www-form-urlencoded
 token = {{access_token}} &
 client_id = {{client_id}} &
 client_secret = {{client_secret}}
+
+### 3. user login - team scope 추가
+POST {{base_url}}/realms/client-user/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+username = dan@sionic.ai &
+password = password &
+grant_type = password &
+client_id = {{client_id}} &
+client_secret = {{client_secret}} &
+scope = team
+
+> {%
+    client.global.set("access_token", response.body["access_token"])
+    client.log("access_token=" + client.global.get("access_token"))
+%}
